@@ -1,6 +1,8 @@
 alterações jogo da cobrinha.
+Lucas Campos Gonçalves RA: 6322538
+https://github.com/Lucas-Campos19/Jogo-da-Cobrinha //link do github
 
-<canvas id="gameCanvas" width="600" height="600"></canvas>  //alteração da largura e altura do canvas
+<canvas id="gameCanvas" width="500" height="500"></canvas>  //alteração da largura e altura do canvas
  <button id="inicia">Iniciar Jogo</button>   // implementação do button para iniciar o jogo
 
 
@@ -23,3 +25,61 @@ estilização do button // estilizando seu fundo, sua cor, curvatura nas bordas,
 
 alteração na velocidade da cobrinha
 setTimeout(update, 1000 / 25);
+
+//ojeto em que a cobrinha vai atrás
+
+let object = { x: 10, y: 10 }; // variavel do objeto com sua posição inicial no canvas
+
+// Verificar colisão com o objeto
+    if (head.x === object.x && head.y === object.y) {
+      pontos++; // Incrementa a pontuação
+      object.x = Math.floor(Math.random() * gridWidth); // se colidiu com o objeto o objeto aparecera em um local aleatório do canvas
+      object.y = Math.floor(Math.random() * gridHeight);  //se colidiu com o objeto o objeto aparecera em um local aleatório do canvas
+    } else {
+      // Remover o último segmento da cobrinha se ela não colidiu com o objeto
+      snake.pop();
+    }
+
+// Desenhar o objeto
+    context.fillStyle = 'red';
+    context.fillRect(object.x * gridSize, object.y * gridSize, gridSize, gridSize);
+
+//Pontuação
+//foi adicionado um modo de pontuação no jogo para ficar mais desafiador e atrativo de jogar
+
+let pontos = 0;  // variavel inicial da pontuação do jogo, sempre iniciando em 0
+
+// condição que verifica colisão com o objeto, se colidiu o programa entra neste if e incrementa a pontuação
+    if (head.x === object.x && head.y === object.y) {
+      // Cobrinha colidiu com o objeto
+      // Atualizar a posição do objeto para uma nova posição aleatória
+      pontos++; // Incrementa a pontuação
+      object.x = Math.floor(Math.random() * gridWidth);
+      object.y = Math.floor(Math.random() * gridHeight);
+    } else {
+      // Remover o último segmento da cobrinha se ela não colidiu com o objeto
+      snake.pop();
+    }
+
+
+// Exibir a pontuação atual
+    context.fillStyle = 'black';
+    context.font = '20px Arial';
+    context.fillText('Pontuação: ' + pontos, 10, 20);
+
+// Função para encerrar o jogo
+  function gameOver() {
+    // Limpar o canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Exibir mensagem de fim de jogo
+    context.fillStyle = 'red';
+    context.font = '30px Arial';
+    context.fillText('Game Over', canvas.width / 2 - 80, canvas.height / 2);
+     // Redefinir a pontuação para 0
+     pontos = 0; // assim que a cobrinha colidir nas bordas do canvas a função game over é chamada fazendo com que assim a pontuação se inicie com 0 novamente,
+  }
+
+
+
+

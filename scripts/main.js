@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   let iniciar = document.getElementById('inicia');
   iniciar.addEventListener('click', () => {
-  // Iniciar o jogo
-  update();
-});
-
+    // Iniciar o jogo
+    update();
+  });
 
   // Configurações do jogo
   const canvas = document.getElementById('gameCanvas');
@@ -14,8 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const gridHeight = canvas.height / gridSize;
 
   // Estado do jogo
+  let pontos = 0;
   let snake = [{ x: 10, y: 10 }];
   let direction = 'right';
+
+  // Variável do objeto
+  let object = { x: 10, y: 10 };
 
   // Função para atualizar o estado do jogo
   function update() {
@@ -41,16 +44,26 @@ document.addEventListener('DOMContentLoaded', () => {
       gameOver();
       return;
     }
-	
-	   // Verificar colisão com a própria cobrinha
+
+    // Verificar colisão com a própria cobrinha
     if (snake.some(segment => segment.x === head.x && segment.y === head.y && segment !== head)) {
       gameOver();
       return;
     }
 
+    // Verificar colisão com o objeto
+    if (head.x === object.x && head.y === object.y) {
+      // Cobrinha colidiu com o objeto
+      // Atualizar a posição do objeto para uma nova posição aleatória
+      pontos++; // Incrementa a pontuação
+      object.x = Math.floor(Math.random() * gridWidth);
+      object.y = Math.floor(Math.random() * gridHeight);
+    } else {
+      // Remover o último segmento da cobrinha se ela não colidiu com o objeto
+      snake.pop();
+    }
 
     snake.unshift(head);
-    
 
     // Limpar o canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -60,6 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
     snake.forEach(segment => {
       context.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
     });
+
+    // Desenhar o objeto
+    context.fillStyle = 'red';
+    context.fillRect(object.x * gridSize, object.y * gridSize, gridSize, gridSize);
+
+    // Exibir a pontuação atual
+    context.fillStyle = 'black';
+    context.font = '20px Arial';
+    context.fillText('Pontuação: ' + pontos, 10, 20);
 
     // Agendar a próxima atualização
     setTimeout(update, 1000 / 25);
@@ -88,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = 'red';
     context.font = '30px Arial';
     context.fillText('Game Over', canvas.width / 2 - 80, canvas.height / 2);
+     // Redefinir a pontuação para 0
+     pontos = 0;
   }
 
   // Adicionar o evento de pressionar tecla
