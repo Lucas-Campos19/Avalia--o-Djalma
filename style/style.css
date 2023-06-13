@@ -1,0 +1,20 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+#gameCanvas {
+  border: 1px solid #333;
+}
+#inicia{
+   background-color: blueviolet;
+   color: white;
+   border-radius: 10px;
+   font-size: 20px;
+   position: relative;
+   bottom:450px;left: 155px;
+}

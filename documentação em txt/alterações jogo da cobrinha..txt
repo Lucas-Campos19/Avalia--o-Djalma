@@ -1,0 +1,25 @@
+alterações jogo da cobrinha.
+
+<canvas id="gameCanvas" width="600" height="600"></canvas>  //alteração da largura e altura do canvas
+ <button id="inicia">Iniciar Jogo</button>   // implementação do button para iniciar o jogo
+
+
+iniciar o jogo // assim que o button receber o evento de click o jogo começa a ser executado sem o jogo começar do nada.
+let iniciar = document.getElementById('inicia'); //obtem a referencia do botão utilizando o método getElementById e armazena na variavel iniciar.
+  iniciar.addEventListener('click', () => {
+  // Iniciar o jogo
+  update();
+});
+
+estilização do button // estilizando seu fundo, sua cor, curvatura nas bordas, seu tamanho e seu posicionamento na pagina HTML.
+#inicia{
+   background-color: blueviolet;
+   color: white;
+   border-radius: 10px;
+   font-size: 20px;
+   position: relative;
+   bottom:450px;left: 155px;
+}
+
+alteração na velocidade da cobrinha
+setTimeout(update, 1000 / 25);
